@@ -510,7 +510,7 @@ class InlineData {
     poison();
   }
 
-  constexpr InlineData(const InlineData& rhs) noexcept;
+  inline InlineData(const InlineData& rhs) noexcept;
   InlineData& operator=(const InlineData& rhs) noexcept;
 
   friend bool operator==(const InlineData& lhs, const InlineData& rhs) {
@@ -789,7 +789,7 @@ static_assert(sizeof(InlineData) == kMaxInline + 1, "");
 
 #ifdef ABSL_INTERNAL_CORD_HAVE_SANITIZER
 
-constexpr InlineData::InlineData(const InlineData& rhs) noexcept
+inline InlineData::InlineData(const InlineData& rhs) noexcept
     : rep_(rhs.rep_.SanitizerSafeCopy()) {
   poison();
 }
@@ -830,7 +830,7 @@ constexpr void InlineData::poison() {
 
 #else  // ABSL_INTERNAL_CORD_HAVE_SANITIZER
 
-constexpr InlineData::InlineData(const InlineData&) noexcept = default;
+inline InlineData::InlineData(const InlineData&) noexcept = default;
 inline InlineData& InlineData::operator=(const InlineData&) noexcept = default;
 
 constexpr void InlineData::poison_this() {}
